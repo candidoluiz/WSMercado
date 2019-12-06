@@ -42,6 +42,22 @@ public class Service {
   
   @GET
   @Produces("application/json")
+  @Path("listarMercadosPorCidade/{cidade}")
+  public String getMercadoPorCidade(@PathParam("cidade")String cidade) {
+   MercadoDao mDao = new MercadoDao();
+   
+   try
+{
+	List<MercadoDto> lista = mDao.ListarMercadoPorCidade(cidade);
+	return g.toJson(lista);
+} catch (Exception e)
+{
+	return e.getMessage();
+}
+  }
+  
+  @GET
+  @Produces("application/json")
   @Path("listarCidades")
   public String getCidades() {
    MercadoDao mDao = new MercadoDao();

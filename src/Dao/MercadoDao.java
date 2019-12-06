@@ -243,4 +243,37 @@ public class MercadoDao
 		}
 		
 	}
+	public List<MercadoDto> ListarMercadoPorCidade(String cidade) throws Exception {
+		List<MercadoDto> lista=new ArrayList<MercadoDto>();
+        MercadoDto mercado;
+        try
+		{
+        	if(!VerifiqueConexao())
+		          return lista;
+        	
+        	sql="select * from mercado where cidade=?";
+        	pst=con.prepareStatement(sql);
+        	pst.setString(1, cidade);
+        	rs=pst.executeQuery();
+        	
+        	while(rs.next())
+        	{
+        		mercado = new MercadoDto();
+        		mercado.setBairro(rs.getString("bairro"));
+        		mercado.setMercadoId(rs.getInt("mercadoId"));
+        		mercado.setNome(rs.getString("nome"));
+        		mercado.setRua(rs.getString("rua"));
+        		mercado.setNumero(rs.getString("numero"));
+        		mercado.setFoto(rs.getString("foto"));
+        		mercado.setCidade(rs.getString("cidade"));
+        		mercado.setUf(rs.getString("uf"));
+        		lista.add(mercado);
+        	}
+        	
+		} catch (Exception e)
+		{
+			throw new Exception(e.getMessage());
+		}
+        return lista;
+	}
 }
